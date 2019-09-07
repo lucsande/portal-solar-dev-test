@@ -6,6 +6,7 @@ class PowerGeneratorsController < ApplicationController
 
     full_search if @search.present?
 
+    @power_generators = @power_generators.sort_by(&:name)
     @power_generators = Kaminari.paginate_array(@power_generators).page(params[:page]).per(6)
   end
 
@@ -71,7 +72,8 @@ class PowerGeneratorsController < ApplicationController
     max_wgt = @search[:max_weight].to_f
     @power_generators = @power_generators.reject { |pgen| pgen.weight > max_wgt } unless max_wgt.zero?
 
-    return if @search[:structure] == ''
+    return if (@search[:structure].nil?) || (@search[:structure] == '')
+
     @power_generators = PowerGenerator.all.select { |pgen| pgen.structure_type == @search[:structure] }
   end
 
@@ -91,6 +93,7 @@ class PowerGeneratorsController < ApplicationController
     end
 
     return unless @search[:pid_free] == '1'
+
     @power_generators += PowerGenerator.all.select { |pgen| pgen.description.downcase.include?('pid free') }
   end
 
