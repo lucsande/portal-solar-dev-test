@@ -5,49 +5,62 @@
   </div>
 
   <div class="searcher gradient">
-    <div class="searcher__radio">
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="searchRadio" id="simpleSearch" value="simple" checked>
-        <label class="form-check-label" for="simpleSearch">Pesquisa simples</label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="searchRadio" id="advancedSearch" value="advanced">
-        <label class="form-check-label" for="advancedSearch">Pesquisa Avançada</label>
+    <div class="row">
+      <div class="searcher__radio">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="searchRadio" id="simpleSearch" value="simple" checked>
+          <label class="form-check-label" for="simpleSearch">Pesquisa simples</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="searchRadio" id="advancedSearch" value="advanced">
+          <label class="form-check-label" for="advancedSearch">Pesquisa Avançada</label>
+        </div>
       </div>
     </div>
-
-    <%= form_tag '/', method: :get do %>
+    <div class="row">
       <div class="simple-form">
         <%= render 'form' %>
       </div>
 
       <div class="advanced-form" style="display:none;">
-        <!-- Entradas do usuário para pesquisar uma coleção de geradores de energia com base nas recomendações fornecidas e melhor custo de frete. -->
         <%= render 'form_advanced' %>
       </div>
+    </div>
 
-      <%= render 'price_filter' %>
-      <%= render 'kwp_filter' %>
-
-    <% end %>
   </div>
 
   <div class="container" >
-    <% @power_generators.each do |power_generator| %>
-      <%= link_to power_generator_path(power_generator), class: "box card power_generator-card" do%>
-      <!-- <div class="box card power_generator-card"> -->
-        <%= image_tag power_generator.image_url, class: 'power_generator-card__img' %>
-        <div class="power_generator-card__body">
-          <h2><%= power_generator.name.upcase %></h2>
-          <p class="power_generator-card__price"><%= number_to_currency(power_generator.price, unit: "R$ ", precision: 2, :separator => ",", :delimiter => ".") %></p>
-          <p><strong>Descrição: </strong><%= power_generator.description %></p>
-        </div>
-      <!-- </div> -->
+    <div class="row">
+      <% @power_generators.each do |power_generator| %>
+        <%= link_to power_generator_path(power_generator), class: "box col-5 card" do%>
+        <!-- <div class="box card power_generator-card"> -->
+          <div class="row">
+            <div class="col-6 card-left-col">
+              <h2><%= power_generator.name.upcase %></h2>
+              <p class="power_generator-card__price"><%= number_to_currency(power_generator.price, unit: "R$ ", precision: 2, :separator => ",", :delimiter => ".") %></p>
+              <div class="row">
+                <div class="col-12">
+                  <p>
+                    <strong>L x A x C: </strong>
+                    <%= power_generator.width %> x
+                    <%= power_generator.height %> x
+                    <%= power_generator.lenght %>
+                  </p>
+                </div>
+              </div>
+              <p><strong>Peso Cubado: </strong><%= power_generator.cubic_weight %></p>
+              <p><strong>Peso: </strong><%= power_generator.weight %></p>
+              <%= image_tag power_generator.image_url %>
+            </div>
+
+            <div class="col-6">
+              <p class="card-description"><strong>Descrição: </strong><%= power_generator.description %></p>
+            </div>
+          </div>
+        <!-- </div> -->
+        <% end %>
       <% end %>
-    <% end %>
-    <%= paginate @power_generators, class: 'centered' %>
-  </div>
-  <div class="container">
+    </div>
     <%= paginate @power_generators, class: 'centered' %>
   </div>
 </div>

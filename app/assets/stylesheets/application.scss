@@ -1,19 +1,5 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- */
-/* Custom bootstrap variables must be set or imported *before* bootstrap.*/*/
 @import "bootstrap";
-@import "bootstrap/scss/bootstrap"
+@import "bootstrap/scss/bootstrap";
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -27,6 +13,10 @@ body {
   grid-gap: 140px;
   padding-left: 100px;
 }
+
+/*.container {
+  margin: 0 auto;
+}*/
 
 .box {
   padding: 10px;
@@ -82,8 +72,11 @@ p.power_generator-card__price {
 
 .searcher {
   margin-top: 20px;
+  padding-top: 30px;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
 
 }
 
@@ -95,10 +88,10 @@ p.power_generator-card__price {
 }
 
 .simple-form {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-left: 100px;
+  margin: 25px 50px;
+  width: 400px;
   display: flex;
+  flex-direction: column;
 }
 
 /*.simple-form__input {
@@ -112,9 +105,13 @@ p.power_generator-card__price {
 
 .advanced_search {
   margin: 25px 50px;
-  width: 350px;
+  width: 400px;
   display: flex;
   flex-direction: column;
+}
+
+.form-check {
+  display: inline;
 }
 
 .filter {
@@ -124,31 +121,52 @@ p.power_generator-card__price {
   align-items: center;
 }
 
+.input {
+  max-height: 20px;
+}
+
 .power_generators-list {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.power_generator-card {
-  height: 200px;
-  width: 720px;
-  display: flex;
-  flex-direction: row;
-  margin-left: -60px;
+.card {
+  margin: 10px;
+  width: 100px;
+}
+
+.card-left-col {
+  p {
+    text-align: right;
+    padding-top: 0;
+    text-size: 10px;
+  }
+  h2 {
+    text-align: right;
+    margin-top: 10px;
+  }
+}
+
+
+
+.card img {
+  width: 100% ;
+  border-radius: 0.25em;
+  margin: 30px 0 15px;
 }
 
 .power_generator-card__img {
   width: 220px;
   height: 220px;
-  border-radius: 0.25em;
 }
 
-.power_generator-card__body {
+
+/*.power_generator-card__body {
   margin-left: 26px;
   margin-right: 130px;
 }
-
+*/
 .power_generator-card__button {
   color: #e96443;
 }

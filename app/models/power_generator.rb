@@ -5,6 +5,12 @@ class PowerGenerator < ApplicationRecord
   validates :lenght, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 200 }
   validates :weight, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 3000 }
 
+  before_save :compute_cubic_weight
+
+  def compute_cubic_weight
+    self.cubic_weight = self.height * self.width * self.lenght * 300
+  end
+
   enum structure_type: %i[
     metalico
     ceramico
