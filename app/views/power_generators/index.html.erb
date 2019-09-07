@@ -18,15 +18,16 @@
 
     <%= form_tag '/', method: :get do %>
       <div class="simple-form">
-        <%= render 'form', power_generator: PowerGenerator.new %>
+        <%= render 'form' %>
       </div>
 
       <div class="advanced-form" style="display:none;">
         <!-- Entradas do usuário para pesquisar uma coleção de geradores de energia com base nas recomendações fornecidas e melhor custo de frete. -->
-        <%= render 'form_advanced', power_generator: PowerGenerator.new %>
+        <%= render 'form_advanced' %>
       </div>
 
-      <%= render 'price_filter', power_generator: PowerGenerator.new %>
+      <%= render 'price_filter' %>
+      <%= render 'kwp_filter' %>
 
     <% end %>
   </div>
@@ -44,6 +45,9 @@
       <!-- </div> -->
       <% end %>
     <% end %>
+    <%= paginate @power_generators, class: 'centered' %>
+  </div>
+  <div class="container">
     <%= paginate @power_generators, class: 'centered' %>
   </div>
 </div>
