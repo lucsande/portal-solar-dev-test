@@ -111,11 +111,18 @@ p.power_generator-card__price {
   margin-left: -60px;
 }*/
 
-.advanced-form {
-  margin-top: 22px;
-  margin-bottom: 20px;
-  margin-left: 100px;
+.advanced_search {
+  margin: 25px 50px;
+  width: 350px;
   display: flex;
+  flex-direction: column;
+}
+
+.filter {
+  margin:25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .power_generators-list {
@@ -147,3 +154,6 @@ p.power_generator-card__price {
   color: #e96443;
 }
 
+.pagination {
+  margin: 0 auto 50px;
+}

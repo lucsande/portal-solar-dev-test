@@ -1,0 +1,6 @@
+<%=  simple_form_for :price_filter, url: root_path, method: :get,
+  html: { class: "form_inline filter" } do |f| %>
+    <%= f.input_field :min_price, label: "", placeholder: "Mínimo preço" %>
+    <%= f.input_field :max_price, label: "", placeholder: "Máximo preço" %>
+    <%= f.submit "Filtrar" %>
+<% end %>
