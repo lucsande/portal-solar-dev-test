@@ -19,18 +19,15 @@
     <%= form_tag '/', method: :get do %>
       <div class="simple-form">
         <%= render 'form', power_generator: PowerGenerator.new %>
-        <!-- <div class="simple-form__input">
-          <input class="form-control form-control-lg" type="text" placeholder="o que procura?">
-        </div>
-        <div class="simple-form__btn">
-          <button type="submit" class="btn btn-outline-primary btn-lg">Pesquisar</button>
-        </div> -->
       </div>
 
       <div class="advanced-form" style="display:none;">
         <!-- Entradas do usuário para pesquisar uma coleção de geradores de energia com base nas recomendações fornecidas e melhor custo de frete. -->
         <%= render 'form_advanced', power_generator: PowerGenerator.new %>
       </div>
+
+      <%= render 'price_filter', power_generator: PowerGenerator.new %>
+
     <% end %>
   </div>
 
@@ -45,5 +42,7 @@
         </div>
       </div>
     <% end %>
+    <%= paginate @power_generators, class: 'centered' %>
   </div>
 </div>
+

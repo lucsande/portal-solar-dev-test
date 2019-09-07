@@ -1,14 +1,25 @@
 class PowerGeneratorsController < ApplicationController
   def index
     @power_generators = PowerGenerator.all
+
     @simple = params['simple_search']
     @advanced = params['advanced_search']
+    @price = params['price_filter']
 
     if @simple.present?
       simple_search
     elsif @advanced.present?
       advanced_search
     end
+
+    if @price.present?
+      min = @price[:min_price].to_f
+      max = @price[:max_price].to_f
+      @power_generators = @power_generators.reject { |pgen| pgen.price < min } unless min.zero?
+      @power_generators = @power_generators.reject { |pgen| pgen.price > max } unless max.zero?
+    end
+
+    @power_generators = Kaminari.paginate_array(@power_generators).page(params[:page]).per(6)
   end
 
   private
@@ -38,38 +49,32 @@ class PowerGeneratorsController < ApplicationController
   end
 
   def advanced_search
+    simple_search unless @advanced[:query] == ''
+
     if @advanced[:guarantee] == '1'
       @power_generators = @power_generators.select { |pgen| pgen.description.downcase.include?('garantia') }
     end
-
     if @advanced[:pid_free] == '1'
       @power_generators = @power_generators.select { |pgen| pgen.description.downcase.include?('pid free') }
     end
-
     unless @advanced[:structure] == ''
       @power_generators = @power_generators.select { |pgen| pgen.structure_type == @advanced[:structure] }
     end
 
     unless @advanced[:max_lenght] == ''
-      @power_generators = @power_generators.select { |pgen| pgen.lenght <= @advanced[:max_lenght].to_i }
+      @power_generators = @power_generators.select { |pgen| pgen.lenght <= @advanced[:max_lenght].to_f }
     end
-
     unless @advanced[:max_width] == ''
-      @power_generators = @power_generators.select { |pgen| pgen.width <= @advanced[:max_width].to_i }
+      @power_generators = @power_generators.select { |pgen| pgen.width <= @advanced[:max_width].to_f }
     end
-
     unless @advanced[:max_height] == ''
-      @power_generators = @power_generators.select { |pgen| pgen.height <= @advanced[:max_height].to_i }
+      @power_generators = @power_generators.select { |pgen| pgen.height <= @advanced[:max_height].to_f }
     end
-
     unless @advanced[:max_weight] == ''
-      @power_generators = @power_generators.select { |pgen| pgen.weight <= @advanced[:max_weight].to_i }
+      @power_generators = @power_generators.select { |pgen| pgen.weight <= @advanced[:max_weight].to_f }
     end
-
     unless @advanced[:min_kwp] == ''
-      @power_generators = @power_generators.select { |pgen| pgen.kwp >= @advanced[:min_kwp].to_i }
+      @power_generators = @power_generators.select { |pgen| pgen.kwp >= @advanced[:min_kwp].to_f }
     end
-
-    simple_search unless @advanced[:query] == ''
   end
 end
