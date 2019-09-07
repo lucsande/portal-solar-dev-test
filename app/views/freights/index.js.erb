@@ -1,0 +1,30 @@
+// const freightCalc = () => {
+//   calcBtn = document.querySelector('#calc-btn');
+//   zipCodeField = document.querySelector('#zip-code-value');
+//   calcBtn.addEventListener('click', (event) => {
+//     event.preventDefault;
+//     calculate(zipCodeField.value);
+//   });
+// }
+
+// const calculate = (zipCode) => {
+//   fetch(`"http://apps.widenet.com.br/busca-cep/api/cep/${zipCode.substring(0,5)}-${zipCode.substring(5,9)}.json"`)
+//     .then(function(response) {
+//       return response.json();
+//     })
+//     .then(function(data) {
+//       insertHTML
+//       console.log(JSON.stringify(data));
+//     });
+// }
+
+var insertHTML = (cost, state, code) => {
+  const modalBody = document.querySelector('.modal-body');
+  modalBody.insertAdjacentHTML('beforeend',
+    `<p class="freight-message"><strong>R$${cost}</strong> de frete para o estado de ${state}, ${code}.</p class="freight-message">`
+  );
+}
+
+console.log("<%= @address['state'] %>")
+console.log('<%= @freight[0].cost.round(2) %>')
+insertHTML(<%= @freight[0].cost.round(2) %>, "<%= @address['state'] %>", "<%= @address['code'] %>" )

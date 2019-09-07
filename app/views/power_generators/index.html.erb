@@ -32,12 +32,16 @@
   <div class="container" >
     <div class="row">
       <% @power_generators.each do |power_generator| %>
-        <%= link_to power_generator_path(power_generator), class: "box col-5 card" do%>
-        <!-- <div class="box card power_generator-card"> -->
-          <div class="row">
+          <div class="row box col-5 card">
             <div class="col-6 card-left-col">
+                <%= link_to power_generator_path(power_generator) do%>
               <h2><%= power_generator.name.upcase %></h2>
+                <% end %>
               <p class="power_generator-card__price"><%= number_to_currency(power_generator.price, unit: "R$ ", precision: 2, :separator => ",", :delimiter => ".") %></p>
+              <!-- Button trigger modal -->
+              <button href="#" id="freight-btn" class="" data-pgen="<%= power_generator.id %>">
+                Calcule o frete!
+              </button>
               <div class="row">
                 <div class="col-12">
                   <p>
@@ -57,11 +61,37 @@
               <p class="card-description"><strong>Descrição: </strong><%= power_generator.description %></p>
             </div>
           </div>
-        <!-- </div> -->
-        <% end %>
       <% end %>
     </div>
     <%= paginate @power_generators, class: 'centered' %>
+  </div>
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="freightModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Frete</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Digite seu CEP:</p>
+          <%= simple_form_for :zip_code_input, url: freights_path, method: :get, remote: true do |f|%>
+            <%= f.input :code, placeholder: "00000000", label: '', id: "zip-code-value" %>
+            <%= f.hidden_field :pgen, value: "", id: 'hidden-pgen-id' %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Fechar</button>
+            <%= f.submit "Calcular!", class: "btn btn-primary"%>
+          <% end %>
+          <!-- <button id="calc-btn" type="button" class="btn btn-primary">Calcular!</button> -->
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 

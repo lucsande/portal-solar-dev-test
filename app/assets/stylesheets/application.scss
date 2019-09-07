@@ -19,7 +19,9 @@ body {
 }*/
 
 .box {
+  max-height: 600px;
   padding: 10px;
+  color: #007bff;
 }
 
 h2 {
@@ -138,6 +140,17 @@ input {
 }
 
 .card-left-col {
+  #freight-btn {
+    color: #007bff;
+    background-color: white;
+    width: 100%;
+    font-size: 12px;
+    // font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    border: solid 1px;
+    border-radius: 5px;
+  }
   p {
     text-align: right;
     padding-top: 0;
@@ -213,4 +226,9 @@ input {
         float: none;
         border: none;
     }
+}
+
+.freight-message {
+  color: $green;
+  font-size:16px;
 }
