@@ -1,28 +1,10 @@
 require 'open-uri'
 class PowerGeneratorsController < ApplicationController
   def index
+    @search = params['search_terms']
     @power_generators = PowerGenerator.all
 
-    @simple = params['simple_search']
-    @advanced = params['advanced_search']
-    @price = params['price_filter']
-
-    @kwp = params['kwp_filter']
-
-    if @simple.present?
-      simple_search
-    elsif @advanced.present?
-      advanced_search
-    end
-
-    # raise
-    if @price.present?
-      filter_by_price
-    end
-
-    if @kwp.present?
-      filter_by_kwp
-    end
+    full_search if @search.present?
 
     @power_generators = Kaminari.paginate_array(@power_generators).page(params[:page]).per(6)
   end
@@ -44,22 +26,23 @@ class PowerGeneratorsController < ApplicationController
 
   private
 
-  def simple_search
-    @query = @simple[:query].split(' ')
-    score_hash = {}
-    @power_generators.each { |pgen| score_hash[pgen.id] = 0 }
+  def full_search
+    @power_generators = PowerGenerator.all
+    search_by_keywords if @search[:keywords] != ''
 
-    # 3 points for each query word present in name, 1 point for each query word present in description
-    @query.each do |word|
-      @power_generators.each do |pgen|
-        score_hash[pgen.id] += 3 if pgen.name.downcase.include?(word.downcase)
-        score_hash[pgen.id] += 1 if pgen.description.downcase.include?(word.downcase)
-      end
-    end
+    filter_by_materiality
+    filter_by_dimensions
+    filter_by_quality
+    filter_by_price
+    filter_by_kwp
 
-    score_ary = score_hash.sort_by { |_k, v| v }.reverse
-    filtered_score = score_ary.reject { |_k, v| v.zero? }
+    @power_generators.uniq!
+  end
 
+  def search_by_keywords
+    @keywords = @search[:keywords].split(' ')
+
+    filtered_score = generate_search_scores
     @power_generators = []
 
     filtered_score.each do |score|
@@ -68,52 +51,60 @@ class PowerGeneratorsController < ApplicationController
     end
   end
 
-  def advanced_search
+  def generate_search_scores
+    score_hash = {}
+    @power_generators.each { |pgen| score_hash[pgen.id] = 0 }
 
-    @power_generators = []
+    # 3 points for each keyword present in name, 1 point for each keyword present in description
+    @keywords.each do |word|
+      @power_generators.each do |pgen|
+        score_hash[pgen.id] += 3 if pgen.name.downcase.include?(word.downcase)
+        score_hash[pgen.id] += 1 if pgen.description.downcase.include?(word.downcase)
+      end
+    end
 
-    simple_search unless @advanced[:query] == ''
+    score_ary = score_hash.sort_by { |_k, v| v }.reverse
+    score_ary.reject { |_k, v| v.zero? }
+  end
 
-    if @advanced[:guarantee] == '1'
+  def filter_by_materiality
+    max_wgt = @search[:max_weight].to_f
+    @power_generators = @power_generators.reject { |pgen| pgen.weight > max_wgt } unless max_wgt.zero?
+
+    return if @search[:structure] == ''
+    @power_generators = PowerGenerator.all.select { |pgen| pgen.structure_type == @search[:structure] }
+  end
+
+  def filter_by_dimensions
+    max_len = @search[:max_lenght].to_f
+    max_wid = @search[:max_width].to_f
+    max_hgt = @search[:max_height].to_f
+
+    @power_generators = @power_generators.reject { |pgen| pgen.lenght > max_len } unless max_len.zero?
+    @power_generators = @power_generators.reject { |pgen| pgen.width > max_wid } unless max_wid.zero?
+    @power_generators = @power_generators.reject { |pgen| pgen.height > max_hgt } unless max_hgt.zero?
+  end
+
+  def filter_by_quality
+    if @search[:guarantee] == '1'
       @power_generators += PowerGenerator.all.select { |pgen| pgen.description.downcase.include?('garantia') }
     end
-    if @advanced[:pid_free] == '1'
-      @power_generators += PowerGenerator.all.select { |pgen| pgen.description.downcase.include?('pid free') }
-    end
-    unless @advanced[:structure] == ''
-      @power_generators += PowerGenerator.all.select { |pgen| pgen.structure_type == @advanced[:structure] }
-    end
 
-    unless @advanced[:max_lenght] == ''
-
-      @power_generators += PowerGenerator.all.select { |pgen| pgen.lenght <= @advanced[:max_lenght].to_f }
-    end
-    unless @advanced[:max_width] == ''
-      @power_generators += PowerGenerator.all.select { |pgen| pgen.width <= @advanced[:max_width].to_f }
-    end
-    unless @advanced[:max_height] == ''
-      @power_generators += PowerGenerator.all.select { |pgen| pgen.height <= @advanced[:max_height].to_f }
-    end
-    unless @advanced[:max_weight] == ''
-      @power_generators += PowerGenerator.all.select { |pgen| pgen.weight <= @advanced[:max_weight].to_f }
-    end
-    unless @advanced[:min_kwp] == ''
-      @power_generators += PowerGenerator.all.select { |pgen| pgen.kwp >= @advanced[:min_kwp].to_f }
-    end
-
-    @power_generators.uniq!
+    return unless @search[:pid_free] == '1'
+    @power_generators += PowerGenerator.all.select { |pgen| pgen.description.downcase.include?('pid free') }
   end
 
   def filter_by_price
-    min = @price[:min_price].to_f
-    max = @price[:max_price].to_f
+    min = @search[:min_price].to_f
+    max = @search[:max_price].to_f
+
     @power_generators = @power_generators.reject { |pgen| pgen.price < min } unless min.zero?
     @power_generators = @power_generators.reject { |pgen| pgen.price > max } unless max.zero?
   end
 
   def filter_by_kwp
-    min = @kwp[:min_kwp].to_f
-    max = @kwp[:max_kwp].to_f
+    min = @search[:min_kwp].to_f
+    max = @search[:max_kwp].to_f
     @power_generators = @power_generators.reject { |pgen| pgen.kwp < min } unless min.zero?
     @power_generators = @power_generators.reject { |pgen| pgen.kwp > max } unless max.zero?
   end

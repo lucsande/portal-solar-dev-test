@@ -1,21 +1,24 @@
-<%=  simple_form_for :advanced_search, url: root_path, method: :get do |f| %>
-  <%= f.input_field :query, label: "", placeholder: "Qual a sua busca?", input_html: {value: ""} %>
+<%=  simple_form_for :search_terms, url: root_path, method: :get do |f| %>
   <%= f.input :guarantee, label: "Com garantia", as: :boolean %>
   <%= f.input :pid_free, label: "PID free", as: :boolean %>
-  <%= f.input :structure, label: "tipo de estrutura",
-    prompt: "estruturas",
-    collection: %i[ceramico fibrocimento laje metalico solo trapezoidal]
+  <%= f.input_field :keywords, label: "", placeholder: "Palavras-chave", input_html: {value: ""} %>
+
+  <%= f.input :structure, label: ".",
+    prompt: "Tipo de estrutura",
+    collection: %i[ceramico fibrocimento laje metalico solo trapezoidal],
+    required: false
   %>
 
-  <%= f.input_field :max_lenght, label: "", placeholder: "Comprimento máximo", input_html: {value: ""} %>
   <%= f.input_field :max_width, label: "", placeholder: "Largura máxima", input_html: {value: ""} %>
   <%= f.input_field :max_height, label: "", placeholder: "Altura máxima", input_html: {value: ""} %>
+  <%= f.input_field :max_lenght, label: "", placeholder: "Comprimento máximo", input_html: {value: ""} %>
   <%= f.input_field :max_weight, label: "", placeholder: "Peso máximo", input_html: {value: ""} %>
 
   <%= f.input_field :min_price, label: "", placeholder: "Preço mínimo" %>
   <%= f.input_field :max_price, label: "", placeholder: "Preço máximo " %>
   <%= f.input_field :min_kwp, label: "", placeholder: "KWP Mínimo" %>
   <%= f.input_field :max_kwp, label: "", placeholder: "KWP Máximo" %>
+
 
   <%= f.submit "Buscar!" %>
 <% end %>

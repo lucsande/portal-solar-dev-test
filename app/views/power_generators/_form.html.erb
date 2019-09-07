@@ -1,5 +1,5 @@
-<%=  simple_form_for :simple_search, url: root_path, method: :get do |f| %>
-  <%= f.input :query, label: "", placeholder: "Qual a sua busca?", input_html: {value: ""} %>
+<%=  simple_form_for :search_terms, url: root_path, method: :get do |f| %>
+  <%= f.input :keywords, label: "", placeholder: "Qual a sua busca?", input_html: {value: ""}, required: false %>
   <%= f.submit "Buscar!" %>
 <% end %>
 
