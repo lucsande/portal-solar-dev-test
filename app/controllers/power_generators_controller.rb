@@ -1,3 +1,4 @@
+require 'open-uri'
 class PowerGeneratorsController < ApplicationController
   def index
     @power_generators = PowerGenerator.all
@@ -8,6 +9,21 @@ class PowerGeneratorsController < ApplicationController
       simple_search
     elsif @advanced.present?
       advanced_search
+    end
+  end
+
+  def show
+    @power_generator = PowerGenerator.find(params[:id])
+    @zip_code = params[:zip_code_input]
+    if @zip_code.present?
+      @zip_code_value = @zip_code[:code]
+      url = "http://apps.widenet.com.br/busca-cep/api/cep/#{@zip_code_value.first(5)}-#{@zip_code_value.last(3)}.json"
+      address_serialized = open(url).read
+      @address = JSON.parse(address_serialized)
+
+      @freights = Freight.all.where(state: @address['state'])
+    else
+      @freights = []
     end
   end
 
