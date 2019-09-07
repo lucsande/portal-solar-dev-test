@@ -1,0 +1,15 @@
+current directory: /home/lucas/code/lucsande/portal-solar-dev-test/portal-solar-dev-test/vendor/cache/ruby/2.6.0/gems/websocket-driver-0.7.1/ext/websocket-driver
+/home/lucas/.rbenv/versions/2.6.3/bin/ruby -I /home/lucas/.rbenv/versions/2.6.3/lib/ruby/2.6.0 -r ./siteconf20190906-28906-15ok6u9.rb extconf.rb
+creating Makefile
+
+current directory: /home/lucas/code/lucsande/portal-solar-dev-test/portal-solar-dev-test/vendor/cache/ruby/2.6.0/gems/websocket-driver-0.7.1/ext/websocket-driver
+make "DESTDIR=" clean
+
+current directory: /home/lucas/code/lucsande/portal-solar-dev-test/portal-solar-dev-test/vendor/cache/ruby/2.6.0/gems/websocket-driver-0.7.1/ext/websocket-driver
+make "DESTDIR="
+compiling websocket_mask.c
+linking shared-object websocket_mask.so
+
+current directory: /home/lucas/code/lucsande/portal-solar-dev-test/portal-solar-dev-test/vendor/cache/ruby/2.6.0/gems/websocket-driver-0.7.1/ext/websocket-driver
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 websocket_mask.so ./.gem.20190906-28906-1v9ll7t

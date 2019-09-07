@@ -1,0 +1,15 @@
+current directory: /home/lucas/code/lucsande/portal-solar-dev-test/portal-solar-dev-test/vendor/cache/ruby/2.6.0/gems/bindex-0.8.1/ext/skiptrace
+/home/lucas/.rbenv/versions/2.6.3/bin/ruby -I /home/lucas/.rbenv/versions/2.6.3/lib/ruby/2.6.0 -r ./siteconf20190906-28906-1wwbm4m.rb extconf.rb
+creating Makefile
+
+current directory: /home/lucas/code/lucsande/portal-solar-dev-test/portal-solar-dev-test/vendor/cache/ruby/2.6.0/gems/bindex-0.8.1/ext/skiptrace
+make "DESTDIR=" clean
+
+current directory: /home/lucas/code/lucsande/portal-solar-dev-test/portal-solar-dev-test/vendor/cache/ruby/2.6.0/gems/bindex-0.8.1/ext/skiptrace
+make "DESTDIR="
+compiling cruby.c
+linking shared-object skiptrace/internal/cruby.so
+
+current directory: /home/lucas/code/lucsande/portal-solar-dev-test/portal-solar-dev-test/vendor/cache/ruby/2.6.0/gems/bindex-0.8.1/ext/skiptrace
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 cruby.so ./.gem.20190906-28906-h1m8o1/skiptrace/internal

@@ -1,0 +1,5 @@
+current directory: /home/lucas/code/lucsande/portal-solar-dev-test/portal-solar-dev-test/vendor/cache/ruby/2.6.0/gems/childprocess-1.0.1/ext
+/home/lucas/.rbenv/versions/2.6.3/bin/ruby mkrf_conf.rb
+
+current directory: /home/lucas/code/lucsande/portal-solar-dev-test/portal-solar-dev-test/vendor/cache/ruby/2.6.0/gems/childprocess-1.0.1/ext
+/home/lucas/.rbenv/versions/2.6.3/bin/ruby -rrubygems /home/lucas/code/lucsande/portal-solar-dev-test/portal-solar-dev-test/vendor/cache/ruby/2.6.0/gems/rake-12.3.3/exe/rake RUBYARCHDIR\=/home/lucas/code/lucsande/portal-solar-dev-test/portal-solar-dev-test/vendor/cache/ruby/2.6.0/extensions/x86_64-linux/2.6.0-static/childprocess-1.0.1 RUBYLIBDIR\=/home/lucas/code/lucsande/portal-solar-dev-test/portal-solar-dev-test/vendor/cache/ruby/2.6.0/extensions/x86_64-linux/2.6.0-static/childprocess-1.0.1
