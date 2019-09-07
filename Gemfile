@@ -14,9 +14,9 @@ gem 'bootsnap', '>= 1.4.2', require: false
 # gem 'rails-assets-jquery'
 gem 'kaminari'
 gem 'jquery-rails'
-gem 'bootstrap', '~> 4.2.1'
 gem 'simple_form'
 gem 'pry-byebug'
+gem 'bootstrap', '~> 4.3.1'
 
 gem 'uglifier', '>= 1.3.0'
 gem "roo", "~> 2.8.0"
