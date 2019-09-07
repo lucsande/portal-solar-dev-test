@@ -1,6 +1,6 @@
 <%=  simple_form_for :kwp_filter, url: root_path, method: :get,
   html: { class: "form_inline filter" } do |f| %>
-    <%= f.input_field :min_price, label: "", placeholder: "Mínimo preço" %>
-    <%= f.input_field :max_price, label: "", placeholder: "Máximo preço" %>
+    <%= f.input_field :min_kwp, label: "", placeholder: "KWP Mínimo" %>
+    <%= f.input_field :max_kwp, label: "", placeholder: "KWP Máximo" %>
     <%= f.submit "Filtrar" %>
 <% end %>
